@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "sqlite" //"mysql"
+  url      = "file:./dev.db" //env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  loginType        String?            @default("email")
+  password         String?
+  email            String?            @unique
+  name             String?
+  role             String?            @default("user")
+  username         String?            @unique
+
+  session          Session[]
+  stripeCustomerId String?
+  isEmailVerified  Boolean?
+  Subscription     Subscription[]
+}
+
+// model Company {
+//   id          Int                @id @default(autoincrement())
+//   name        String?
+//   ruc         String?            @unique
+//   description String?
+//   // image
+//   group       Group              @relation(fields: [groupId], references: [id], onDelete: Cascade)
+//   data        FlatData[]
+//   users       User[]
+//   // updatedAt
+//   // createdAt
+//   groupId     Int
+// }
+
+
+
+// model Group {
+//   id          Int       @id @default(autoincrement())
+//   name        String?
+//   description String?
+//   //  image
+//   companies   Company[]
+// }
+
+// model FlatData {
+//   id            Int     @id @default(autoincrement())
+//   title         String?
+//   description   String?
+
+//   //CHANGE ON MIGRATION USE JSON.STRINGIFY AND JSON METHODS
+//   realData      String? 
+//   budgetData    String?
+  
+//   interestTrait String  @default("money") //ALTERNATE IS QUANTITY 
+//   pricePerUnit  Int     @default(0) //MONEY IS IN CENTS!!!!
+//   accumulative  Boolean @default(false)
+//   company       Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+//   companyId     Int
+// }
+
+model Session {
+  id        Int       @id @default(autoincrement())
+  authToken String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Subscription {
+  id            Int     @id @default(autoincrement())
+  user          User    @relation(fields: [userId], references: [id])
+  userId        Int
+  stripeId      String  @unique
+  stripeStatus  String?
+  stripePriceId String?
+  quantity      Int?
+  trialEndsAt   Int?
+  endsAt        Int?
+  startDate     Int
+  lastEventDate Int
+}
