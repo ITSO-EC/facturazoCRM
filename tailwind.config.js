@@ -14,12 +14,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'FC7639',
-        secondary: 'A6CD60',
-        primaryText: '202020',
+        primary: '#FC7639',
+        secondary: '#A6CD60',
+        tertiary: '#775DA6',
+        primaryText: '#202020',
         secondaryText: colors.gray[500],
         actionColor: colors.gray,
-        whiteColor: 'F1F5F9',
+        whiteColor: '#F1F5F9',
         blackColor: colors.slate[900],
 
         dmPrimary: colors.gray,

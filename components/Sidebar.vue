@@ -8,7 +8,7 @@
       id="sidebar"
       ref="sidebar"
       class="flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 p-4 transition-all duration-200 ease-in-out"
-      :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'"
+      :class="sidebarOpen ? 'translate-x-0 bg-whiteColor' : '-translate-x-64'"
     >
 
       <!-- Sidebar header -->
@@ -39,14 +39,14 @@
         
             <!-- Home -->
             <NuxtLink to="/dashboard" custom v-slot="{ href, navigate, isExactActive }">
-              <li class="px-3 text-lg font-semibold text-primaryText hover:text-blackColor py-2 rounded-sm mb-0.5 last:mb-0" :class="(currentRoute.fullPath === '/dashboard' ) && 'bg-slate-900'">
+              <li class="rounded-lg overflow-hidden px-3 py-4 text-lg font-semibold text-primaryText hover:text-blackColor mb-0.5 last:mb-0" 
+              :class="(currentRoute.fullPath === '/dashboard' ) && 'bg-tertiary bg-opacity-20'">
                <a class="block truncate transition duration-150" :class="isExactActive" :href="href" @click="navigate">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center">
-                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                      <path class="fill-current text-slate-400" :class="(currentRoute.fullPath === '/dashboard' ) && '!text-indigo-500'" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" />
-                      <path class="fill-current text-slate-600" :class="(currentRoute.fullPath === '/dashboard' ) && 'text-indigo-600'" d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" />
-                      <path class="fill-current text-slate-400" :class="(currentRoute.fullPath === '/dashboard' ) && 'text-indigo-200'" d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" />                      
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                    :class="(currentRoute.fullPath === '/dashboard' ) && 'text-primary'">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M3 13H11V3H3V13ZM3 21H11V15H3V21ZM13 21H21V11H13V21ZM13 3V9H21V3H13Z" fill="currentColor"/>
                     </svg>
                     <span class="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Panel de Control</span>
                   </div>
@@ -57,14 +57,32 @@
             </NuxtLink>
           
             <!-- Users -->
-            <NuxtLink to="/users" custom v-slot="{ href, navigate, isExactActive }">
-              <li class="px-3 text-lg font-semibold text-primaryText hover:text-blackColor py-2 rounded-sm mb-0.5 last:mb-0" :class="isExactActive && 'bg-slate-900'">
+            <NuxtLink to="/inventory" custom v-slot="{ href, navigate, isExactActive }">
+              <li class="rounded-lg overflow-hidden px-3 py-4 text-lg font-semibold text-primaryText hover:text-blackColor mb-0.5 last:mb-0" :class="isExactActive && 'bg-tertiary bg-opacity-20'">
                <a class="block truncate transition duration-150" :class="isExactActive" :href="href" @click="navigate">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center">
-                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                      <path class="fill-current text-slate-600" :class="isExactActive && '!text-indigo-500'" d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
-                      <path class="fill-current text-slate-400" :class="isExactActive && '!text-indigo-300'" d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    :class="isExactActive && 'text-primary'">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+                    </svg>
+                    <span class="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Inventario</span>
+                  </div>
+                  
+                </div>
+              </a>
+              </li>
+            </NuxtLink>
+              
+            <!-- Users -->
+            <NuxtLink to="/users" custom v-slot="{ href, navigate, isExactActive }">
+              <li class="rounded-lg overflow-hidden px-3 py-4 text-lg font-semibold text-primaryText hover:text-blackColor mb-0.5 last:mb-0" :class="isExactActive && 'bg-tertiary bg-opacity-20'">
+               <a class="block truncate transition duration-150" :class="isExactActive" :href="href" @click="navigate">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    :class="isExactActive && 'text-primary'">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
                     </svg>
                     <span class="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Users</span>
                   </div>
