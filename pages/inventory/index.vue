@@ -36,10 +36,7 @@ function goToRegister() {
               
     </div>
     <div class="h-auto my-10 ">
-      <div class="m-auto text-center lg:w-8/12 xl:w-7/12">
-        <h2 class="text-2xl text-gray-800 dark:text-gray-200 font-bold md:text-4xl">Index
-        </h2>
-      </div>
+    
       <GenericTable></GenericTable>
 
     </div>

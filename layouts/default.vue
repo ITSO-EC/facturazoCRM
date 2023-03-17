@@ -22,7 +22,7 @@ const sidebarOpen = ref(false)
       <Header :sidebarOpen="sidebarOpen" @toggle-sidebar="sidebarOpen = !sidebarOpen" ></Header>
       <div class="flex">
         <ClientOnly>
-          <Sidebar :sidebarOpen="sidebarOpen" @close-sidebar="sidebarOpen = false" />
+          <Sidebar class="z-40" :sidebarOpen="sidebarOpen" @close-sidebar="sidebarOpen = false" />
           
         </ClientOnly>   
         <main class="grow">

@@ -1,359 +1,75 @@
 <template>
-  <tr>
-    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-       
-        <div class="font-medium text-blackColor ">{{customer?.username}}</div>
-    
-    </td>
-    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-      <div class="text-center">{{customer?.email}}</div>
-    </td>
-    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-      <div class="text-center">Compania</div>
-    </td>
-    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-      <div class="text-center"> {{getRole(customer.role)}}</div>
-    </td>
-    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-      <div class="text-center font-medium text-emerald-500">31313</div>
-    </td>
-   
-    <td class="px-2 text-center py-3 whitespace-nowrap w-px">
-      <!-- Menu button -->
-        <!-- Menu button -->
-        <DropdownEditMenu align="right" class="absolute -mt-4 -ml-4">
-        <li>
-          <button
-            class="
-              font-medium
-              text-sm text-slate-600
-              hover:text-blackColor
-              flex
-              py-1
-              px-3
-            "
-          
-            @click.stop="editModalOpen=true"
-            >Editar Usuario</button
-          >
-        </li>
-        
-        
-        <li>
-          <button
-            class="
-              font-medium
-              text-sm text-rose-500
-              hover:text-rose-600
-              flex
-              py-1
-              px-3
-            "
-          
-            @click.stop="dangerModalOpen = true"
-            >Eliminar</button
-          >
-        </li>
-        </DropdownEditMenu>
-     
-    </td>
-
-    <!-- Edit Customer -->
-    <ModalBasic
-      :modalOpen="editModalOpen"
-      @close-modal="editModalOpen = false"
-      title="Editar datos de cliente"
-    >
-      <!-- Modal content -->
-      <div class="px-5 pt-4 pb-1">
-          <div class="text-sm">
-              
-              <!-- Inicio del Form -->
-              <div class="space-y-2 grid grid-cols-1 sm:grid-cols-2 gap-4" >
-              
-              
-              <!-- Name Input + Label -->
-              <div>
-                  <label class="block text-sm font-medium mb-1 mt-4" :for="`name-edit-${customer.id}`"
-                  >Nombre 
-                  <span class="text-red-500" >*</span>
-                  </label>
-                  <p class="text-xs text-red-500 font-medium italic mb-1 mt-2" :hidden="registerErrors.name">
-                  *  El nombre no puede estar vacío
-                  
-                  </p>
-                  <input :id="`name-edit-${customer.id}`" class="form-input w-full" type="text" v-model="newUser.username"/>
-              </div>                
-
-              <!-- Mail Input + Label -->
-              <div>
-                  <label class="block text-sm font-medium mb-1 mt-2" :for="`email-edit-${customer.id}`"
-                  >Correo
-                  <span class="text-red-500" >*</span>
-                  
-                  </label>
-                  <p class="text-xs text-red-500 font-medium italic mb-1 mt-2"  :hidden="registerErrors.email">
-                  *  El correo no es válido
-                  </p>
-                  <input :id="`email-edit-${customer.id}`" class="form-input w-full" type="text" v-model="newUser.email"/>
-              </div>
-              
-            
-              <!-- Role Select + Label -->
-              <div>
-                  <label class="block text-sm font-medium mb-1" :for="`role-${customer.id}`"
-                  >Rol</label
-                  >
-                  <select :id="`role-${customer.id}`" class="w-full form-select" v-model="newUser.role">
-                  
-                      <option value="user">Usuario</option>
-                      <option value="operator">Operador</option>
-                      <option value="admin">Admin</option>
-                      <option value="director">Owner</option>
-                  </select>
-              </div>
-              </div>
-          </div>
+ <tr>
+    <td class="px-4 mx-4 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+      <div class="flex items-center">
+        <label class="inline-flex">
+          <span class="sr-only">Select</span>
+          <input :id="customer.id" class="form-checkbox" type="checkbox" :value="value" @change="check" :checked="checked" />
+        </label>
       </div>
-      <!-- Modal footer -->
-      <div class="px-5 py-4">
-        <div class="flex flex-wrap justify-end space-x-2">
-          <button
-            class="
-              btn-sm
-              border-slate-200
-              hover:border-slate-300
-              text-slate-600
-            "
-            @click.stop="editModalOpen = false"
-          >
-            Cancelar
-          </button>
-          <button :disabled="!isNewUserValid" @click.stop="updateUser()" class="btn-sm disabled:bg-indigo-300 bg-indigo-500 hover:bg-indigo-600 text-white">
-            <span>Guardar</span>
-            <!-- <span :hidden="!loading">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="animate-spin h-5 w-5 mx-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-              </svg>
-            </span> -->
-          </button>
-        </div>
-      </div>
-    </ModalBasic>
+    </td>
+    <td class="px-4 mx-4 py-3 whitespace-nowrap w-px" v-for="(key,index) of keysToShow" :key="`${key}-${index}`">
+      <div class="text-left">{{customer[key]}}</div>
+    </td>
 
-    <!-- Delete Profile -->
-    <ModalBlank
-      id="danger-modal"
-      :modalOpen="dangerModalOpen"
-      @close-modal="dangerModalOpen = false"
-    >
-      <div class="p-5 flex space-x-4">
-        <!-- Icon -->
-        <div
-          class="
-            w-10
-            h-10
-            rounded-full
-            flex
-            items-center
-            justify-center
-            shrink-0
-            bg-rose-100
-          "
-        >
-          <svg
-            class="w-4 h-4 shrink-0 fill-current text-rose-500"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
-            />
+    <!-- Actions -->
+    <td class="px-4 mx-4 py-3 ">
+      <span class="inline-flex w-full justify-end gap-4">
+        <button class="text-secondaryText hover:text-primary active:text-primaryText">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <path d="M15 12.5C15 13.2956 14.6839 14.0587 14.1213 14.6213C13.5587 15.1839 12.7956 15.5 12 15.5C11.2044 15.5 10.4413 15.1839 9.87868 14.6213C9.31607 14.0587 9 13.2956 9 12.5C9 11.7044 9.31607 10.9413 9.87868 10.3787C10.4413 9.81607 11.2044 9.5 12 9.5C12.7956 9.5 13.5587 9.81607 14.1213 10.3787C14.6839 10.9413 15 11.7044 15 12.5V12.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.45801 12.5C3.73201 8.443 7.52301 5.5 12 5.5C16.478 5.5 20.268 8.443 21.542 12.5C20.268 16.557 16.478 19.5 12 19.5C7.52301 19.5 3.73201 16.557 2.45801 12.5V12.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </div>
-        <!-- Content -->
-        <div>
-          <!-- Modal header -->
-          <div class="mb-2">
-            <div class="text-lg font-semibold text-blackColor">
-              ¿Está seguro que desea eliminar este usuario?
-            </div>
-          </div>
-          <!-- Modal content -->
-          <div class="text-sm mb-10">
-            <div class="space-y-2">
-              <p>Considere que esta acción es irreversible.</p>
-            </div>
-          </div>
-          <!-- Modal footer -->
-          <div class="flex flex-wrap justify-end space-x-2">
-            <button
-              class="
-                btn-sm
-                border-slate-200
-                hover:border-slate-300
-                text-slate-600
-              "
-              @click.stop="dangerModalOpen = false"
-            >
-              Cancelar
-            </button>
-            <button @click.stop="deleteUser(customer.id); dangerModalOpen = false" class="btn-sm bg-rose-500 hover:bg-rose-600 text-white">
-              Si, eliminar
-            </button>
-          </div>
-        </div>
-      </div>
-    </ModalBlank>
-  </tr>  
+
+        </button>
+       
+        <button class="text-secondaryText hover:text-primary active:text-primaryText">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <path d="M11 5.49992H6C5.46957 5.49992 4.96086 5.71063 4.58579 6.0857C4.21071 6.46078 4 6.96948 4 7.49992V18.4999C4 19.0304 4.21071 19.5391 4.58579 19.9141C4.96086 20.2892 5.46957 20.4999 6 20.4999H17C17.5304 20.4999 18.0391 20.2892 18.4142 19.9141C18.7893 19.5391 19 19.0304 19 18.4999V13.4999M17.586 4.08592C17.7705 3.8949 17.9912 3.74253 18.2352 3.63772C18.4792 3.5329 18.7416 3.47772 19.0072 3.47542C19.2728 3.47311 19.5361 3.52371 19.7819 3.62427C20.0277 3.72484 20.251 3.87334 20.4388 4.06113C20.6266 4.24891 20.7751 4.47222 20.8756 4.71801C20.9762 4.9638 21.0268 5.22716 21.0245 5.49272C21.0222 5.75828 20.967 6.02072 20.8622 6.26473C20.7574 6.50874 20.605 6.72942 20.414 6.91392L11.828 15.4999H9V12.6719L17.586 4.08592Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button>
+       
+        <button class="text-secondaryText hover:text-primary active:text-primaryText">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <path d="M19 7.5L18.133 19.642C18.0971 20.1466 17.8713 20.6188 17.5011 20.9636C17.1309 21.3083 16.6439 21.5 16.138 21.5H7.862C7.35614 21.5 6.86907 21.3083 6.49889 20.9636C6.1287 20.6188 5.90292 20.1466 5.867 19.642L5 7.5M10 11.5V17.5M14 11.5V17.5M15 7.5V4.5C15 4.23478 14.8946 3.98043 14.7071 3.79289C14.5196 3.60536 14.2652 3.5 14 3.5H10C9.73478 3.5 9.48043 3.60536 9.29289 3.79289C9.10536 3.98043 9 4.23478 9 4.5V7.5M4 7.5H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button>
+        
+    
+      </span>
+    </td>
+    <!-- <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <div class="text-left">{{customer.username}}</div>
+    </td>
+    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <div class="text-left">{{customer.email}}</div>
+    </td>
+    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <div class="text-left">{{customer.role}}</div>
+    </td>
+    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <div class="text-center">{{customer.role}}</div>
+    </td>
+    <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+      <div class="text-left font-medium text-sky-500">{{customer.lastOrder}}</div>
+    </td> -->
+  </tr>    
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+const props = defineProps(['customer', 'value', 'selected','keysToShow'])
+const checked = computed(() => props.selected.includes(props.value))
 
-
-const props = defineProps(['customer', 'value'])
-
-//////////////////////////////////////////
-//Variables + Refs Init
-//////////////////////////////////////////
-const succestoast = ref(false);    
-const editModalOpen = ref(false);
-const error = ref('');
-const dangerModalOpen = ref(false);    
-const confirmation=ref("");
-// const previewImage = ref(DefaultImage);
-
-const isNewUserValid = ref(false);
-const newUser = ref({
-    id: props?.customer?.id,
-    name: props?.customer?.name,
-    username: props?.customer?.username,
-    email: props?.customer?.email,
-    role: props?.customer?.role,
-    
-})
-
-//Register Modal Errors
-const registerErrors = ref({
-// imageFormat: true,
-// imageSize: true,
-    name: true,
-    email: true,
-    role: true,
-    username: true,
-   
-})
-
-
-
-//////////////////////////////////////////
-//Component Functionality 
-//////////////////////////////////////////
-
-//Core Actions - CRUD / Specific Actions
-const updateUser = async (userId) => {
-    error.value = "";
-    succestoast.value = false; 
-
-    
-    const response = await $fetch('/api/users', {
-       method:'PUT',
-        body: newUser.value
-
-    }).catch((err) => error.value = err?.data?.data);
-    
-    if(error.value == "") {
-        editModalOpen.value=false; 
-        resetData();
-        succestoast.value=true;
-    }
-}
-
-const resetErrors = () => {
-    registerErrors.value.name = true;
-    registerErrors.value.email = true;
-    //registerErrors.value.cellphone = true;
-    //registerErrors.value.birthdate = true;
-    registerErrors.value.password = true;
-    registerErrors.value.passwordValid = true;
-    registerErrors.value.passwordConfirm = true;
-}
-
-const resetData = () => {
-    if(!error.value) {
-    //previewImage.value = DefaultImage;
-
-        newUser.value.name= '';
-        newUser.value.email= '';
-        newUser.value.password= '';            
-        //newUser.value.phoneNumber= '';
-        //delete newUser.value.file;
-        newUser.value.role= 'user'
-        confirmation.value = ''
-        resetErrors();
-    }
-}
-
-const checkValidUser = () => {
-    isNewUserValid.value = false;
-
-    // if(loading.value) {
-    //     isNewUserValid.value = false
-    //     return;
-    // };
-
-    let valid = true;
-    Object.entries(registerErrors.value).forEach(([key, value]) => {
-        if(!value && key != "imageFormat" && key != "imageSize") {
-        valid = false;
-        return;
-        }
-    });
-
-    if(valid) isNewUserValid.value = true;
-
-}
-
-const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-watch([newUser.value, confirmation], ([currentValue, newConfirm]) => {
-        (currentValue?.username?.length > 0) ? registerErrors.value.name = true : registerErrors.value.name = false;
-        
-        //(phoneNumberRegex.exec(currentValue.phoneNumber)!=null) ? registerErrors.value.cellphone = true : registerErrors.value.cellphone = false;
-        (emailRegex.exec(currentValue.email)!=null) ? registerErrors.value.mail = true : registerErrors.value.mail = false;
-        
-        //(currentValue.nationality != '') ? registerErrors.value.nationality = true : registerErrors.value.nationality = false; 
-        //(currentValue.birthdate != '') ? registerErrors.value.birthdate = true : registerErrors.value.birthdate = false; 
-        //(currentValue.companions >= 0) ? registerErrors.value.companions = true : registerErrors.value.companions = false; 
-        
-        checkValidUser();
-    }
-);
-
-
-const getRole = (role) => {
-  switch(role) {
-    
-    case 'operator':
-      return 'Operador'
-    case 'admin':
-      return 'Administrador'
-    case 'director':
-      return 'Director'
-    default:
-      return 'Invitado'
+function check() {
+  let updatedSelected = [...props.selected]
+  if (this.checked) {
+    updatedSelected.splice(updatedSelected.indexOf(props.value), 1)
+  } else {
+    updatedSelected.push(props.value)
   }
+  context.emit('update:selected', updatedSelected)
 }
 
-const deleteUser = (customerId) => {
-
-  //TODO: UPDATE LOADING STATE TO UPDATE TABLE
-  $fetch('/api/users/', {
-    method:'DELETE',
-    body: {
-      userId: customerId
-    }
-  })
-  
-  //TODO: UPDATE LOADING STATE TO UPDATE TABLE
-}
 </script>
