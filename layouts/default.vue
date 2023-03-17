@@ -20,15 +20,19 @@ const sidebarOpen = ref(false)
       
       <!-- Site header -->
       <Header :sidebarOpen="sidebarOpen" @toggle-sidebar="sidebarOpen = !sidebarOpen" ></Header>
-      
-      <main>
-        <ClientOnly >
-      <Sidebar :sidebarOpen="sidebarOpen" @close-sidebar="sidebarOpen = false" />
-     
-    </ClientOnly>     
+      <div class="flex">
+        <ClientOnly>
+          <Sidebar :sidebarOpen="sidebarOpen" @close-sidebar="sidebarOpen = false" />
+          
+        </ClientOnly>   
+        <main class="grow">
+        
           <slot/>
-      
-      </main>
+        
+        </main>
+      </div>
+        
+     
 
   </div>
 </template>

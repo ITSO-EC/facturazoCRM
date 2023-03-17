@@ -138,9 +138,11 @@
          <!-- Page header -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
 
-            <!-- Left: Title -->
+             <!-- Left: Title -->
             <div class="mb-4 sm:mb-0">
-            <h1 class="text-2xl md:text-3xl text-blackColor dark:text-slate-50 font-bold">Usuarios ✨</h1>
+                <h1 class="text-2xl md:text-3xl text-secondaryText dark:text-slate-50 font-medium">Usuarios
+                
+                </h1>
             </div>
 
             <!-- Right: Actions  -->

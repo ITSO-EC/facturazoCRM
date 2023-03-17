@@ -20,24 +20,23 @@ function goToRegister() {
 
       <!-- Left: Title -->
       <div class="mb-4 sm:mb-0">
-        <h1 class="text-2xl md:text-3xl text-blackColor dark:text-slate-50 font-bold">Home
+        <h1 class="text-2xl md:text-3xl text-secondaryText dark:text-slate-50 font-medium">Panel de Control
          
         </h1>
       </div>
-
-      <!-- Right: Actions  -->
+       <!-- Right: Actions  -->
       <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-
-
 
       
                   
       </div>
+      
 
     </div>
+    
     <div class="h-auto my-10 ">
       <div class="m-auto text-center lg:w-8/12 xl:w-7/12">
-        <h2 class="text-2xl text-gray-800 dark:text-gray-200 font-bold md:text-4xl">Index
+        <h2 class="text-2xl text-gray-800 dark:text-gray-200 font-bold md:text-4xl">Mi dashboard
         </h2>
       </div>
      
