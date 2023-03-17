@@ -37,9 +37,10 @@ watch(user, async () => {
 
         <!-- Header: Left side -->
         <div class="flex items-center">
-         
-          <Logo/>
-          <span class="text-secondaryText mx-4 text-2xl font-normal">Facturazo</span>
+          <NuxtLink to="/" class="flex items-center"> 
+            <Logo/>
+            <span class="text-secondaryText mx-4 text-2xl font-normal">Facturazo</span>
+          </NuxtLink>
           <!-- Hamburger button -->
           <button class="text-slate-500 hover:text-slate-600 lg:hidden" @click.stop="$emit('toggle-sidebar')" aria-controls="sidebar" :aria-expanded="sidebarOpen">
             <span class="sr-only">Open sidebar</span>

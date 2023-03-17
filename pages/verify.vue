@@ -23,6 +23,12 @@ async function postOtp() {
   }
 };
 
+
+definePageMeta({
+  layout: 'guest',
+  
+})
+
 </script>
 
 <template>
@@ -30,7 +36,7 @@ async function postOtp() {
     <div class="flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div class="max-w-md w-full">
         <div class="lg:flex mt-10">
-          <img class="mx-auto h-24 w-auto" src="/img/avantage-clear.svg" alt="full stack jack logo" />
+          <img class="mx-auto h-24 w-auto" src="/img/avantage-clear.svg" alt="Logo" />
         </div>
         <div class="max-w-md w-full">
           <div>
@@ -51,7 +57,7 @@ async function postOtp() {
           <div v-if="response?.hasErrors && errors"
             class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
             <ul class="block sm:inline">
-              <li v-for="[key, value] in errors">
+              <li v-for="[key, value] in errors" :key="key">
                 {{ value.message }}
               </li>
             </ul>
@@ -62,7 +68,7 @@ async function postOtp() {
               <div>
                 <label for="name" class="sr-only">Verify Email</label>
                 <input v-model="otp" id="name" name="otp" required
-                  class="appearance-none dark:bg-slate-500 dark:text-white dark:placeholder-white rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  class="form-input w-full"
                   :class="errors?.has('name') ? ' border-red-500' : ''" placeholder="enter otp" />
               </div>
             </div>
