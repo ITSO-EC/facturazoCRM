@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
+import Logo from "~/components/elements/Logos/colorMode.vue";
 import { loginWithEmail } from "~/composables/useAuth";
 import type { Ref } from "vue"
 
@@ -22,57 +23,67 @@ async function postLoginForm() {
 </script>
 
 <template>
-  <div class="dark:bg-black h-screen">
-    <div class="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+  <div class="bg-loginbg bg-center bg-no-repeat bg-cover h-screen">
+    <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 w-full">
       <div class="max-w-md w-full">
-        <div class="lg:flex mt-10">
-          <img class="mx-auto h-24 w-auto" src="~/assets/img/logo.png" alt="full stack jack logo" />
+        <div class="lg:flex my-24 items-center h-auto gap-4 font-bold ">
+          <Logo class="w-24 h-24"/>
+          <span class="text-[#095073] text-5xl">FACTURAZO</span>
         </div>
-        <div>
-          <h2 class="text-center text-3xl font-extrabold mt-5 text-gray-900 dark:text-white">
-            Sign In
+        <div class="ml-12">
+          <h2 class="text-left text-3xl font-bold mt-12 text-gray-900 dark:text-white">
+            Inicia Sesión
           </h2>
         </div>
         <div v-if="response?.hasErrors && errors"
-          class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
+          class="ml-12 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
           <ul class="block sm:inline">
             <li v-for="[key, value] in errors" :key="key">
               {{ value.message }}
             </li>
           </ul>
         </div>
-        <form v-on:submit.prevent class="mt-8 space-y-6" action="#" method="POST">
-
+        <form v-on:submit.prevent class="mt-4 ml-12 space-y-6" action="#" method="POST">
+          <!-- Errors -->
           <div class="rounded-md shadow-sm -space-y-px mb-1">
             <div>
-              <label for="email-address" class="sr-only">Username or Email</label>
+              <label for="email-address">Correo:</label>
               <input type="email" v-model="usernameOrEmail" id="username" name="username" required
-                class="dark:bg-slate-500 dark:text-white dark:placeholder-white appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                :class="errors?.has('username') ? ' border-red-500' : ''" placeholder="username" />
+              class="form-input w-full" 
+              :class="errors?.has('username') ? ' border-red-500' : ''" placeholder="username" />
             </div>
           </div>
+
+          <!-- Form Inputs-->
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label for="password">Contraseña:</label>
             <input v-model="password" id="password" name="password" type="password" autocomplete="current-password"
               required
-              class="dark:bg-slate-500 dark:text-white dark:placeholder-white appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="form-input w-full"
               :class="errors?.has('password') ? ' border-red-500' : ''" placeholder="Password" />
           </div>
         </form>
-        <button @click.prevent="postLoginForm"
-          class="mt-5 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#00dc82] hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <!-- Heroicon name: solid/lock-closed -->
-            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clip-rule="evenodd" />
-            </svg>
-          </span>
-          register
-        </button>
+        <!-- Form Options -->
+        <div class="flex flex-col my-4 ml-12">
+          <div class="flex justify-between ">
+            <span class="flex items-center gap-4">
+              <input type="checkbox" class="form-checkbox" name="remember-me" id="checkbox-remember">
+              Recuérdame
+            </span>
+            <a href="text-blue-800">Olvidaste tu contraseña?</a>
+          </div>
+          <!-- Form Submit -->
+          <button @click.prevent="postLoginForm"
+            class="btn bg-secondary font-bold w-full mt-4">
+            
+            <span class="font-bold text-whiteColor">INICIAR SESIÓN</span> 
+          </button>
+        </div>
+        
       </div>
+
+      <div></div>
     </div>
+    
   </div>
 </template>
